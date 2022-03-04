@@ -1,0 +1,167 @@
+/*
+Global styles
+*/
+
+body {
+    font-family: poppins;
+    color: #333333;
+}
+
+.btn-primary {
+    background-color: #27AE60;
+    border-color: transparent;
+}
+
+.btn-primary:hover {
+    background-color: #0AAD4E;
+    border-color: transparent;
+}
+
+/*
+Navbar styles
+*/
+
+.navbar {
+    box-shadow: 0 4px 10px #80808059;
+}
+
+.navbar-brand {
+    font-weight: bolder;
+    font-size: 28px;
+    color: #27AE60 !important;
+}
+
+.navbar h6 {
+    margin-right: 50px;
+    font-size: 0.9rem;
+}
+
+.navbar button {
+    padding: 4px 10px;
+}
+
+/*
+tab contents styles
+*/
+.nav-tabs {
+    border-bottom: none;
+}
+
+.nav-tabs .nav-link.active {
+    color: #333333;
+    background-color: transparent;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-bottom: 4px solid #27AE60;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.nav-link {
+    transition: none;
+    color: #333333;
+}
+
+.nav-link:hover {
+    color: #333333;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+}
+
+.tabs {
+    margin-top: 30px;
+}
+
+.tabs .nav {
+    justify-content: space-around;
+}
+
+.tabs .tab-pane {
+    margin-top: 20px;
+}
+
+.tabs .empty-state {
+    color: #828282;
+    font-size: 0.9rem;
+    margin-top: 80px;
+    font-style: italic;
+}
+
+
+/*
+modal styles
+*/
+.modal-body input:nth-of-type(3) {
+    width: 14%;
+    display: inline;
+    border-radius: 50px;
+}
+
+.modal-body label:nth-of-type(4) {
+    display: block;
+}
+
+.modal-body .form-control {
+    border-radius: 50px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px #80808059;
+    border: none;
+}
+
+.modal-body label {
+    margin-bottom: 6px;
+}
+
+.modal-body .form-select {
+    /*border-radius: 50px;*/
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px #80808059;
+    border: none;
+}
+
+.modal-body span {
+    font-size: .9rem;
+}
+
+
+/*
+item list styles
+*/
+.item-list .items-heading {
+    align-items: center;
+    background-color: #DEFFEC;
+    padding: 5px 20px;
+    border-radius: 4px;
+}
+
+.item-list .item-single {
+    align-items: center;
+    margin-top: 10px;
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px #80808059;
+}
+
+.item-list h6 {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.item-list img {
+    width: 20px;
+}
+
+.item-list .edit-icon {
+    /*filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%);*/
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.item-list .delete-icon {
+    cursor: pointer;
+}
+
+
