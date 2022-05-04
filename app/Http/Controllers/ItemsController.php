@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Subscribe;
 use DateInterval;
 use DateTime;
 use Carbon\Carbon;
@@ -28,10 +29,32 @@ class ItemsController extends Controller
 //            $message->from('ezimhede47@yahoo.com','Ezimhede');
 //        });
 
+        // Delete this section later. Just for testing stuff out
+        $items = Item::all()->where("isNotified","false"); //get all items that haven't been sent notification
+
+        foreach ($items as $item) {
+
+            if ((date(now()->toDateString())) > ($item->notification_date)) {
+                $user = DB::table('users')
+                    ->where('id', '=', $item->user_id)
+                    ->get()->first();
+
+                var_dump($user->email);
+                var_dump(url("/home"));
+
+//                Mail::to($user->email)->send(new Subscribe($user->firstName, $item->name, $item->expiry_date)); //send email to user
+
+                $item->isNotified = true;
+                $item->save();
+            }
+        }
+        // End of section to be deleted
+
+
         $userId = Auth::id();
-        $items = Item::all()->where("user_id","==",$userId);
+        $items = Item::all()->where("user_id", "==", $userId);
         $categories = Category::all();
-        return view('\Items\index',["data"=>$items, "categories"=>$categories]);
+        return view('\Items\index', ["data" => $items, "categories" => $categories]);
     }
 
     // POST
@@ -49,22 +72,26 @@ class ItemsController extends Controller
         $notification = $request->input('notification');
         $item->notification_date = $expiry->subDays($notification);
 
+//        send email notification
+//        Mail::to("ezimhede47@gmail.com")->send(new Subscribe());
+
         $item->save();
-        $request->session()->flash('status','item created successfully');
+        $request->session()->flash('status', 'item created successfully');
         return redirect('index');
     }
 
     // GET /edit/1
     public function edit($id)
     {
-        $item = Item::all()->where("id","==","$id");
+        $item = Item::all()->where("id", "==", "$id");
 
 //        return response()->json($item);
         return json_encode($item);
     }
 
-    // POST save an edited item
-    public function save(Request $request) {
+    //POST save an edited item
+    public function save(Request $request)
+    {
         $item = Item::find($request->item_Id);
         $item->name = $request->input('name');
         $item->expiry_date = $request->input('expiry');
@@ -77,7 +104,7 @@ class ItemsController extends Controller
         $item->notification_date = $expiry->subDays($notification);
 
         $item->save();
-        $request->session()->flash('status','item edited successfully');
+        $request->session()->flash('status', 'item edited successfully');
         return redirect('index');
     }
 
@@ -87,7 +114,7 @@ class ItemsController extends Controller
         $item = Item::find($id);
 
         $item->delete();
-        session()->flash('status','item deleted successfully');
+        session()->flash('status', 'item deleted successfully');
         return redirect('index');
     }
 }

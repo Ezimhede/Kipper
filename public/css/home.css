@@ -1,0 +1,22 @@
+.navbar {
+    padding-top: 30px;
+    background: transparent !important;
+    margin-top: -600px;
+    padding-left: 0px;
+}
+
+li {
+    padding-left: 30px;
+}
+
+.nav-item .btn {
+    width: 100px;
+    background: transparent;
+    border: 2px solid white;
+    color: Black;
+    margin-bottom: 20px;
+}
+
+a {
+    /*color: white !important;*/
+}

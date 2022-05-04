@@ -18,6 +18,84 @@ body {
 }
 
 /*
+Home Page styles
+*/
+
+.homepage .navbar-collapse {
+    flex-grow: 0;
+}
+
+.homepage .register {
+    background-color: #27ae60;
+    border-color: #27ae60;
+    color: #ffff;
+}
+
+.homepage .register:hover {
+    background-color: #20b65f;
+    border-color: #20b65f;
+}
+
+.homepage .register:focus {
+    box-shadow: none;
+}
+
+.homepage .login {
+    margin-right: 10px;
+}
+
+.homepage .login:focus {
+    box-shadow: none;
+}
+
+.homepage .login:hover {
+    /*background-color: transparent;*/
+}
+
+.homepage .banner {
+    /*height: 500px;*/
+    height: calc(100vh - 58px);
+    background-image: url("/images/Building.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    /*background-color: blue;*/
+}
+
+.homepage p {
+    font-size: 1.1rem;
+    color: #ffff;
+    background-color: #27ae60;
+    position: relative;
+    top: 400px;
+    display: block;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
+.homepage .navbar button {
+    padding: 4px 20px;
+}
+
+.homepage .login a {
+    text-decoration: none;
+    color: #232323;
+}
+
+.homepage .login a:hover {
+    color: #232323;
+}
+
+.homepage .register a {
+    text-decoration: none;
+    color: #ffff;
+}
+
+
+/*
 Navbar styles
 */
 

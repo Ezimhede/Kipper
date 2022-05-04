@@ -14,8 +14,17 @@ use App\Http\Controllers\ItemsController;
 |
 */
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+// Home
+Route::get('/home', function () {
+    return view('\Home\index');
+});
+// Root
 Route::get('/', function () {
-    return view('welcome');
+    return view('\Home\index');
 });
 
 Route::get('/dashboard', function () {

@@ -29,7 +29,11 @@
         </div>
         <div class="" id="navbarText">
             <h6 class="d-inline">Welcome {{Auth::user()->firstName}}</h6>
-            <button class="btn btn-outline-dark">Log out</button>
+{{--            <a href="{{route("logout")}}"><button class="btn btn-outline-dark">Log out</button></a>--}}
+            <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                @csrf
+                <a href="{{route("logout")}}"><button class="btn btn-outline-dark">Log out</button></a>
+            </form>
         </div>
     </div>
 </nav>

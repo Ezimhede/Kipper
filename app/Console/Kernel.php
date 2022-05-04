@@ -2,11 +2,13 @@
 
 namespace App\Console;
 
+use App\Mail\Subscribe;
 use Carbon\Traits\Timestamp;
 use Date;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -20,25 +22,35 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        // Send out an email notification at the due date
+        // Send out an email notification once the notification date has reached
         $schedule->call(function () {
             $items = DB::table('items')->get();
+
             foreach ($items as $item) {
-                if ($item->notification >= 5) {
-                    $fileName = $item->name;
-                    $currentTime = date("H:i:s a");
-                    $file = fopen($fileName.'.txt', "a+");
-                    fwrite($file, $currentTime);
-                    fclose($file);
+//                if ($item->notification >= 5) {
+//                    $fileName = $item->name;
+//                    $currentTime = date("H:i:s a");
+//                    $file = fopen($fileName.'.txt', "a+");
+//                    fwrite($file, $currentTime);
+//                    fclose($file);
+//                }
+
+                var_dump(date(now()->toDateString()));
+                var_dump($item -> notification_date);
+                $numb = 6;
+                if ((date(now()->toDateString())) > ($item -> notification_date)) {
+                    $userEmail = DB::table('users')
+                                ->where('id', '=','$item->user_id')
+                                ->select('email')
+                                ->get();
+
+                    foreach ($userEmail as $email) {
+                        var_dump($email->email);
+
+                    }
+//                    Mail::to($userEmail)->send(new Subscribe());
                 }
             }
-
-//            $num = 4;
-//            if($num >0){
-//                $file = fopen("test.txt", "w");
-//                fwrite($file, "12345");
-//                fclose($file);
-//            }
         })->everyMinute();
     }
 

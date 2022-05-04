@@ -106,7 +106,7 @@
                                             <input type="hidden" id="itemId" value={{$items->id}} />
                                             <img class="delete-icon" src="{{asset('icons/trash.svg')}}" alt="delete"
                                                  data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                                 onclick="deleteModel({{$items->id}})">
+                                                 onclick="deleteModal({{$items->id}})">
                                         </div>
                                     </div>
                                 </div>
@@ -208,14 +208,40 @@
                                     <div>
                                         <input type="hidden" id="itemId" value={{$items->id}} />
                                         <img class="delete-icon" src="{{asset('icons/trash.svg')}}" alt="delete"
-                                             data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                             onclick="deleteModel({{$items->id}})">
+                                             data-bs-toggle="modal" data-bs-target="#deleteModal2"
+                                             onclick="deleteModal({{$items->id}})">
                                     </div>
                                 </div>
                             </div>
                         @endif
                     @endforeach
                 </div>
+
+                <!-- Modal for delete item-->
+                <div class="modal fade" id="deleteModal2" tabindex="-1" aria-labelledby="deleteModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header justify-content-center">
+{{--                                <h5 class="modal-title" id="editModalLabel">Delete item</h5>--}}
+                            </div>
+                            <form action="/delete" method="get" id="deleteForm-2">
+                                @csrf
+                                <div class="modal-body">
+                                    <p class="text-center">Do you want to delete this item?</p>
+                                    <input type="hidden" name="id" id="deleteId-2"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Delete</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal end -->
+
             </div>
         </div>
 
@@ -244,9 +270,11 @@
         }
 
         // Populate the delete modal when the delete icon is clicked
-        function deleteModel($id) {
+        function deleteModal($id) {
             $('#deleteId').val($id);
+            $('#deleteId-2').val($id);
             $('#deleteForm').attr("action", "/delete/" + $id);
+            $('#deleteForm-2').attr("action", "/delete/" + $id);
         }
 
     </script>
