@@ -1,5 +1,12 @@
 @extends('layouts._layout')
 
+<style>
+    label.error {
+        color: red;
+        display: block;
+    }
+</style>
+
 @section('index')
 
     {{--show alert when an item has been created successfully--}}
@@ -42,15 +49,15 @@
                                 {{--                                <button type="button" class="btn-close" data-bs-dismiss="modal"--}}
                                 {{--                                        aria-label="Close"></button>--}}
                             </div>
-                            <form action="/add" method="post">
+                            <form action="/add" method="post" id="addForm">
                                 @csrf
                                 <div class="modal-body">
                                     <label for="name">Item Name</label>
-                                    <input class="form-control" type="text" name="name"
+                                    <input class="form-control" type="text" name="name" id="add_name"
                                            placeholder="e.g driver's license"/>
 
                                     <label for="category">Category</label>
-                                    <select class="form-select" name="category" id="">
+                                    <select class="form-select" name="category" id="add_category">
                                         <option value="">Select category</option>
                                         @foreach($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
@@ -58,10 +65,12 @@
                                     </select>
 
                                     <label for="expiry">Expiry Date</label>
-                                    <input class="form-control" type="date" name="expiry"/>
+                                    <input class="form-control" type="date" name="expiry" id="add_date"/>
 
                                     <label for="notification">Notification</label>
-                                    <input class="form-control" type="number" name="notification"/> <span>Days before expiry</span>
+                                    <input class="form-control" type="number" min="1" name="notification"
+                                           id="add_notification"/>
+                                    <span>Days before expiry</span>
 
                                     <input type="hidden" name="userId" value={{Auth::id()}} />
                                 </div>
@@ -76,6 +85,7 @@
                 </div>
                 <!-- Modal end -->
 
+                <!-- display a message when the user has not created any item -->
                 @if($data->count() == 0)
                     <p class="empty-state text-center">You have no item to be displayed. <br>Start adding items by
                         clicking the “Add item” button</p>
@@ -123,15 +133,15 @@
                             <div class="modal-header justify-content-center">
                                 <h5 class="modal-title" id="editModalLabel">Edit item</h5>
                             </div>
-                            <form action="/save" method="post">
+                            <form action="/save" method="post" id="editForm">
                                 @csrf
                                 <div class="modal-body">
                                     <label for="name">Item Name</label>
-                                    <input class="form-control" type="text" name="name" id="name"
+                                    <input class="form-control" type="text" name="name_edit" id="name"
                                            placeholder="e.g driver's license"/>
 
                                     <label for="category">Category</label>
-                                    <select class="form-select" name="category" id="category">
+                                    <select class="form-select" name="category_edit" id="category">
                                         <option value="">Select category</option>
                                         @foreach($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
@@ -139,10 +149,11 @@
                                     </select>
 
                                     <label for="expiry">Expiry Date</label>
-                                    <input class="form-control" type="date" name="expiry" id="date"/>
+                                    <input class="form-control" type="date" name="expiry_edit" id="date"/>
 
                                     <label for="notification">Notification</label>
-                                    <input class="form-control" type="number" name="notification" id="notif"/> <span>Days before expiry</span>
+                                    <input class="form-control" type="number" min="1" name="notification_edit" id="notif"/>
+                                    <span>Days before expiry</span>
 
                                     <input type="hidden" name="userId" value={{Auth::id()}} />
                                     <input type="hidden" name="item_Id" id="item_Id"/>
@@ -223,7 +234,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header justify-content-center">
-{{--                                <h5 class="modal-title" id="editModalLabel">Delete item</h5>--}}
+                                {{--                                <h5 class="modal-title" id="editModalLabel">Delete item</h5>--}}
                             </div>
                             <form action="/delete" method="get" id="deleteForm-2">
                                 @csrf
@@ -247,7 +258,41 @@
 
     </div>
 
+    <script src="{{asset('js/jquery.validate.js')}}"></script>
+
     <script>
+
+        // For jquery validation
+        $(document).ready(function () {
+            $("#addForm").validate({
+                rules: {
+                    name: "required",
+                    category: "required",
+                    date: "required",
+                    notification: "required"
+                },
+                messages: {
+                    name: "The item name is required",
+                    category: "The category is required",
+                    date: "The expiry date is required",
+                    notification: "The notification days is required"
+                }
+            });
+            $("#editForm").validate({
+                rules: {
+                    name_edit: "required",
+                    category_edit: "required",
+                    date_edit: "required",
+                    notification_edit: "required"
+                },
+                messages: {
+                    name_edit: "The item name is required",
+                    category_edit: "The category is required",
+                    date_edit: "The expiry date is required",
+                    notification_edit: "The notification days is required"
+                }
+            });
+        });
 
         // Populate model when the edit icon is clicked
         function itemModel($id) {

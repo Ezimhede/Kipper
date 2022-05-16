@@ -20,36 +20,10 @@ class ItemsController extends Controller
     // GET /index
     public function index()
     {
-//        $date = new DateTime();
-//        $date->add(new DateInterval('P30D'));
-//        echo $date->format('Y-m-d') . "\n";
-
 //        Mail::send(['text' => 'mail'],['name' =>'Ezimhede'],function($message){
 //            $message->to('ezimhede47@gmail.com','To ezimhede')->subject('Kipper');
 //            $message->from('ezimhede47@yahoo.com','Ezimhede');
 //        });
-
-        // Delete this section later. Just for testing stuff out
-        $items = Item::all()->where("isNotified","false"); //get all items that haven't been sent notification
-
-        foreach ($items as $item) {
-
-            if ((date(now()->toDateString())) > ($item->notification_date)) {
-                $user = DB::table('users')
-                    ->where('id', '=', $item->user_id)
-                    ->get()->first();
-
-                var_dump($user->email);
-                var_dump(url("/home"));
-
-//                Mail::to($user->email)->send(new Subscribe($user->firstName, $item->name, $item->expiry_date)); //send email to user
-
-                $item->isNotified = true;
-                $item->save();
-            }
-        }
-        // End of section to be deleted
-
 
         $userId = Auth::id();
         $items = Item::all()->where("user_id", "==", $userId);
@@ -60,6 +34,15 @@ class ItemsController extends Controller
     // POST
     public function add(Request $request)
     {
+        // Validation for form
+        $validate = $request->validate([
+            'name' =>'required',
+            'category' => 'required',
+            'expiry' => 'required|date',
+            'notification' => 'required|digits_between:1,500',
+            'userId' => 'nullable',
+        ]);
+
         $item = new Item();
         $item->name = $request->input('name');
         $item->expiry_date = $request->input('expiry');
@@ -71,9 +54,7 @@ class ItemsController extends Controller
         $expiry = Carbon::create($expiry);
         $notification = $request->input('notification');
         $item->notification_date = $expiry->subDays($notification);
-
-//        send email notification
-//        Mail::to("ezimhede47@gmail.com")->send(new Subscribe());
+        $item->isNotified = false;
 
         $item->save();
         $request->session()->flash('status', 'item created successfully');
@@ -93,15 +74,16 @@ class ItemsController extends Controller
     public function save(Request $request)
     {
         $item = Item::find($request->item_Id);
-        $item->name = $request->input('name');
-        $item->expiry_date = $request->input('expiry');
-        $item->notification = $request->input('notification');
-        $item->category_id = $request->category;
+        $item->name = $request->input('name_edit');
+        $item->expiry_date = $request->input('expiry_edit');
+        $item->notification = $request->input('notification_edit');
+        $item->category_id = $request->category_edit;
 //        $item->user_id = $request->input('userId');
-        $expiry = $request->input('expiry');
+        $expiry = $request->input('expiry_edit');
         $expiry = Carbon::create($expiry);
-        $notification = $request->input('notification');
+        $notification = $request->input('notification_edit');
         $item->notification_date = $expiry->subDays($notification);
+        $item->isNotified = false;
 
         $item->save();
         $request->session()->flash('status', 'item edited successfully');

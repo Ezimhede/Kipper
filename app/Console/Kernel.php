@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Mail\Subscribe;
+use App\Models\Item;
 use Carbon\Traits\Timestamp;
 use Date;
 use Illuminate\Console\Scheduling\Schedule;
@@ -24,31 +25,18 @@ class Kernel extends ConsoleKernel
 
         // Send out an email notification once the notification date has reached
         $schedule->call(function () {
-            $items = DB::table('items')->get();
+            $items = Item::all()->where("isNotified", "false"); //get all items that haven't been sent notification
 
             foreach ($items as $item) {
-//                if ($item->notification >= 5) {
-//                    $fileName = $item->name;
-//                    $currentTime = date("H:i:s a");
-//                    $file = fopen($fileName.'.txt', "a+");
-//                    fwrite($file, $currentTime);
-//                    fclose($file);
-//                }
+                if ((date(now()->toDateString())) > ($item->notification_date)) {
+                    $user = DB::table('users')
+                        ->where('id', '=', $item->user_id)
+                        ->get()->first();
 
-                var_dump(date(now()->toDateString()));
-                var_dump($item -> notification_date);
-                $numb = 6;
-                if ((date(now()->toDateString())) > ($item -> notification_date)) {
-                    $userEmail = DB::table('users')
-                                ->where('id', '=','$item->user_id')
-                                ->select('email')
-                                ->get();
+                    Mail::to($user->email)->send(new Subscribe($user->firstName, $item->name, $item->expiry_date)); //send email to user
 
-                    foreach ($userEmail as $email) {
-                        var_dump($email->email);
-
-                    }
-//                    Mail::to($userEmail)->send(new Subscribe());
+                    $item->isNotified = true;
+                    $item->save();
                 }
             }
         })->everyMinute();
