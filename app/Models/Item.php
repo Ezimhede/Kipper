@@ -18,4 +18,8 @@ class Item extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    // for mass assignment of variables
+//    protected $fillable = ['name'];
+    protected $guarded = [];
 }

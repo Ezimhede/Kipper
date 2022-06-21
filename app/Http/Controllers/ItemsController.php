@@ -10,25 +10,37 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\Models\Role;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\Types\Integer;
+
+//use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class ItemsController extends Controller
 {
     // GET /index
     public function index()
     {
-//        Mail::send(['text' => 'mail'],['name' =>'Ezimhede'],function($message){
-//            $message->to('ezimhede47@gmail.com','To ezimhede')->subject('Kipper');
-//            $message->from('ezimhede47@yahoo.com','Ezimhede');
-//        });
+
+//      just testing role and permission management. Delete later
+//        $user = Auth::user()->load('roles', 'permissions');
+//        $roles = $user->getRoleNames();
+//        $permissions = $user->getPermissionNames();
+//        if ($roles->contains('admin')) {
+//            if ($permissions->contains('delete items')) {
+//                return view('welcome');
+//            }
+//        }
+//        end of role and permission test
+
 
         $userId = Auth::id();
         $items = Item::all()->where("user_id", "==", $userId);
         $categories = Category::all();
-        return view('\Items\index', ["data" => $items, "categories" => $categories]);
+        return view('Items.index', ["data" => $items, "categories" => $categories]);
     }
 
     // POST
@@ -36,7 +48,7 @@ class ItemsController extends Controller
     {
         // Validation for form
         $validate = $request->validate([
-            'name' =>'required',
+            'name' => 'required',
             'category' => 'required',
             'expiry' => 'required|date',
             'notification' => 'required|digits_between:1,500',
