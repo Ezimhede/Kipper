@@ -20,11 +20,11 @@ use App\Http\Controllers\ItemsController;
 
 // Home
 Route::get('/home', function () {
-    return view('\Home\index');
+    return view('Home.index');
 });
 // Root
 Route::get('/', function () {
-    return view('\Home\index');
+    return view('Home.index');
 });
 
 Route::get('/dashboard', function () {
