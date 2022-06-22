@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/styles.css') }}">
 
     <!-- Scripts -->
-    <script src="{{asset('js/jquery.js')}}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
+    <script src="{{secure_asset('js/jquery.js')}}"></script>
+    <script src="{{ secure_asset('js/bootstrap.js') }}" defer></script>
 
     <title>Kipper</title>
 </head>
