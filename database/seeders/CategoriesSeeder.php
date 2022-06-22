@@ -18,17 +18,5 @@ class CategoriesSeeder extends Seeder
         DB::table('categories')->insert([
             'name' => 'Bank Cards'
         ]);
-        DB::table('categories')->insert([
-            'name' => 'Passports'
-        ]);
-        DB::table('categories')->insert([
-            'name' => 'Vehicle Papers'
-        ]);
-        DB::table('categories')->insert([
-            'name' => 'Driver\'s license'
-        ]);
-        DB::table('categories')->insert([
-            'name' => 'Others'
-        ]);
     }
 }
