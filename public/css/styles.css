@@ -53,23 +53,44 @@ Home Page styles
 }
 
 .homepage .banner {
-    /*height: 500px;*/
     height: calc(100vh - 58px);
-    background-image: url("/images/Building.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    /*background-color: blue;*/
+}
+
+.homepage .banner .row {
+    height: calc(100vh - 58px);
+    background-color: #f8f8f8;
+}
+
+.homepage .banner .header-text {
+    background-color: #27ae60;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffff;
+}
+
+.homepage .banner .header-text button {
+    background-color: red;
+    width: 250px;
+}
+
+.homepage .banner .header-image {
+    background-image: url(/images/smiling.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .homepage p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #ffff;
     background-color: #27ae60;
-    position: relative;
-    top: 400px;
     display: block;
-    width: 50%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
     padding: 10px 15px;
@@ -92,6 +113,14 @@ Home Page styles
 .homepage .register a {
     text-decoration: none;
     color: #ffff;
+}
+
+@media only screen and (max-width: 600px){
+
+    .homepage .banner .header-image {
+        background-position-y: -20px;
+    }
+
 }
 
 
@@ -118,9 +147,14 @@ Navbar styles
     padding: 4px 10px;
 }
 
+.nav-item {
+    padding-right: 20px;
+}
+
 /*
 tab contents styles
 */
+
 .nav-tabs {
     border-bottom: none;
 }
@@ -172,6 +206,7 @@ tab contents styles
 /*
 modal styles
 */
+
 .modal-body input:nth-of-type(3) {
     width: 14%;
     display: inline;
@@ -208,6 +243,7 @@ modal styles
 /*
 item list styles
 */
+
 .item-list .items-heading {
     align-items: center;
     background-color: #DEFFEC;

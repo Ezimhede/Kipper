@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Styles -->
+    <!-- The secure_asset is for production on the live server -->
     <link rel="stylesheet" href="{{ secure_asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
     <!-- Scripts -->
-    <script src="{{secure_asset('js/jquery.js')}}"></script>
+    <script src="{{ secure_asset('js/jquery.js')}}"></script>
     <script src="{{ secure_asset('js/bootstrap.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.js')}}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
 
     <title>Kipper</title>
 </head>
@@ -51,9 +56,17 @@
 </nav>
 
 <div class="container-fluid banner">
-    <p class="text-center">Kipper is the best way to make sure your bank cards, vehicle documents and other
-           important items don't expire without your knowledge
-        </p>
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-6 header-text">
+            <h2 class="text-center">Nothing Expires <br>Under your Watch</h2>
+            <p class="text-center">Kipper is the best way to make sure your bank cards, vehicle documents and other
+                important items don't expire without your knowledge
+            </p>
+            <a href="{{route("register")}}"><button class="btn btn-secondary">Register Now</button></a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6 header-image">
+        </div>
+    </div>
 
 </div>
 
